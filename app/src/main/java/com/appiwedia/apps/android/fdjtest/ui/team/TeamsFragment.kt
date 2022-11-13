@@ -16,6 +16,7 @@ class TeamsFragment : ViewBindingFragment<FragmentTeamsBinding>() {
         get() = FragmentTeamsBinding::inflate
 
     override fun setup() {
+
     }
 
 }
