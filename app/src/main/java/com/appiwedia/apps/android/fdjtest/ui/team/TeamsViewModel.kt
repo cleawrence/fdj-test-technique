@@ -1,4 +1,4 @@
-package com.appiwedia.apps.android.fdjtest.ui
+package com.appiwedia.apps.android.fdjtest.ui.team
 
 import androidx.lifecycle.ViewModel
 
