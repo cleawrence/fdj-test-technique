@@ -19,19 +19,19 @@ class DefaultRepository @Inject constructor(
 
     override suspend fun getAllLeagues(): Flow<Resource<LeaguesResponse>> {
         return flow { emit(safeApiCall { teamServiceApi.getAllLeagues() }) }
-            .catch { cause: Throwable -> emit(Resource.Error(cause.localizedMessage)) }
             .flowOn(dispatchers.io)
+            .catch { cause: Throwable -> emit(Resource.Error(cause.localizedMessage)) }
     }
 
     override suspend fun getAllTeamsFromLeagues(language: String): Flow<Resource<TeamsResponse>> {
         return flow { emit(safeApiCall { teamServiceApi.getAllTeams(language) }) }
-            .catch { cause: Throwable -> emit(Resource.Error(cause.localizedMessage)) }
             .flowOn(dispatchers.io)
+            .catch { cause: Throwable -> emit(Resource.Error(cause.localizedMessage)) }
     }
 
     override suspend fun getTeamDetail(teamName: String): Flow<Resource<TeamsResponse>> {
         return flow { emit(safeApiCall { teamServiceApi.getTeamDetailByName(teamName) }) }
-            .catch { cause: Throwable -> emit(Resource.Error(cause.localizedMessage)) }
             .flowOn(dispatchers.io)
+            .catch { cause: Throwable -> emit(Resource.Error(cause.localizedMessage)) }
     }
 }

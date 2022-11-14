@@ -19,12 +19,9 @@ class TeamDetailViewModel @Inject constructor(
     val teamDetails: LiveData<Resource<TeamsResponse>> = _teamDetails
 
     fun getTeamDetail(teamName: String) {
+        _teamDetails.value = Resource.Loading
         viewModelScope.launch {
             repository.getTeamDetail(teamName).collect {
-                if (it.data?.teams?.size!! > 1 || it.data.teams.isEmpty()) {
-                    _teamDetails.value = Resource.Error("Une erreur inattendue est survenue")
-                }
-
                 _teamDetails.value = it
             }
         }

@@ -21,7 +21,7 @@ class TeamsAdapter(
         }
 
         fun bind(team: Team) {
-            binding.imageLogoTeam.load(team.strTeamLogo) {
+            binding.imageLogoTeam.load(team.strTeamBadge) {
                 crossfade(true)
                 crossfade(300)
             }

@@ -7,13 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.appiwedia.apps.android.fdjtest.data.repositories.Repository
 import com.appiwedia.apps.android.fdjtest.models.league.League
 import com.appiwedia.apps.android.fdjtest.models.league.LeaguesResponse
+import com.appiwedia.apps.android.fdjtest.models.team.Team
 import com.appiwedia.apps.android.fdjtest.models.team.TeamsResponse
 import com.appiwedia.apps.android.fdjtest.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class TeamsViewModel(
+class TeamsViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
 
@@ -28,6 +30,7 @@ class TeamsViewModel(
     }
 
     fun getLeagues() {
+        _teamsLeague.value = Resource.Loading
         viewModelScope.launch {
             repository.getAllLeagues().collect { values ->
                 _leagues.value = values
@@ -36,6 +39,7 @@ class TeamsViewModel(
     }
 
     fun getTeamLeagues(strLeague: String) {
+        _teamsLeague.value = Resource.Loading
         viewModelScope.launch {
             repository.getAllTeamsFromLeagues(strLeague).collect {
                 if (it.data?.teams.isNullOrEmpty()) {
@@ -48,5 +52,9 @@ class TeamsViewModel(
 
     fun getListLeagues(leagues: List<League?>?): Array<String?> {
         return leagues?.map { it?.strLeague }?.toTypedArray() ?: emptyArray()
+    }
+
+    fun reverse(teams: List<Team?>?): List<Team?>? {
+        return teams?.sortedByDescending { it?.strTeam }
     }
 }
