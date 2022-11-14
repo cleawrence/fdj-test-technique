@@ -17,7 +17,6 @@
     <fragment
         android:id="@+id/teamDetailFragment"
         android:name="com.appiwedia.apps.android.fdjtest.ui.teamdetail.TeamDetailFragment"
-        android:label="fragment_team_detail"
         tools:layout="@layout/fragment_team_detail">
         <action
             android:id="@+id/action_teamDetailFragment_to_teamsFragment"

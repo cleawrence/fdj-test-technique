@@ -1,7 +1,6 @@
 package com.appiwedia.apps.android.fdjtest.ui.teamdetail
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -24,14 +23,9 @@ class TeamDetailFragment : ViewBindingFragment<FragmentTeamDetailBinding>() {
         get() = FragmentTeamDetailBinding::inflate
 
     override fun setup() {
+        binding.toolbarTeamDetail.setupWithNavController(findNavController(), AppBarConfiguration(findNavController().graph))
 
-        binding.collapsingToolbarLayout.setupWithNavController(
-            binding.toolbarTeamDetail,
-            findNavController(),
-            AppBarConfiguration(findNavController().graph)
-        )
-
-        streamName = arguments?.getString("teamName")
+        streamName = arguments?.getString(teamName)
         streamName?.let { viewModel.getTeamDetail(it) }
 
         viewModel.teamDetails.observe(viewLifecycleOwner) { state ->
@@ -56,5 +50,9 @@ class TeamDetailFragment : ViewBindingFragment<FragmentTeamDetailBinding>() {
                 }
             }
         }
+    }
+
+    companion object {
+        const val teamName = "teamName"
     }
 }
