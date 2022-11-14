@@ -1,7 +1,6 @@
 package com.appiwedia.apps.android.fdjtest.ui.team
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -15,6 +14,7 @@ import com.appiwedia.apps.android.fdjtest.common.ViewBindingFragment
 import com.appiwedia.apps.android.fdjtest.databinding.FragmentTeamsBinding
 import com.appiwedia.apps.android.fdjtest.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class TeamsFragment : ViewBindingFragment<FragmentTeamsBinding>() {
@@ -41,7 +41,7 @@ class TeamsFragment : ViewBindingFragment<FragmentTeamsBinding>() {
                         binding.txtAutocomplete.threshold = 2
                     }
                     Resource.Loading -> {
-                        Log.i("Chargement", "loading....")
+                        Timber.tag("Chargement").i("loading....")
                     }
                 }
             }
@@ -62,7 +62,8 @@ class TeamsFragment : ViewBindingFragment<FragmentTeamsBinding>() {
                     Toast.makeText(activity, "${state.error}", Toast.LENGTH_SHORT).show()
                 }
                 Resource.Loading -> {
-                    Log.i("Chargement", "chargement equipes de la ligue : $nameLeague en cours")
+                    Timber.tag("Chargement")
+                        .i("team league : $nameLeague")
                 }
                 is Resource.Success -> {
                     teamsAdapter.teams = viewModel.reverse(state.data?.teams)
@@ -73,7 +74,8 @@ class TeamsFragment : ViewBindingFragment<FragmentTeamsBinding>() {
 
     private fun setUpRecyclerView() {
         teamsAdapter = TeamsAdapter { team ->
-           val action = TeamsFragmentDirections.actionTeamsFragmentToTeamDetailFragment(teamName = team.strTeam)
+            val action =
+                TeamsFragmentDirections.actionTeamsFragmentToTeamDetailFragment(teamName = team.strTeam)
             findNavController().navigate(action)
         }
         binding.rvTeamsLeague.apply {
@@ -82,5 +84,4 @@ class TeamsFragment : ViewBindingFragment<FragmentTeamsBinding>() {
         }
         binding.rvTeamsLeague.isNestedScrollingEnabled = false
     }
-
 }
